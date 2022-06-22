@@ -17,14 +17,14 @@ export function Lesson(props: LessonProps) {
 
   return (
     <a href="#">
-      <span  className="text-gray-300">
+      <span  className="text-gray-800">
         {availableDateFormatted}
       </span>
-      <div className="rounded border border-gray-500 p-4 mt-2">
+      <div className="rounded bg-purple-300 border border-purple-600 p-4 mt-2">
         <header className="flex items-center justify-between">
           
           {isLessonAvailable ? (
-            <span className="text-sm text-blue-500 font-medium flex items-center gap-2">
+            <span className="text-sm text-purple-800 font-medium flex items-center gap-2">
               <CheckCircle size={20} />
               Conteudo liberado
             </span>
@@ -45,7 +45,7 @@ export function Lesson(props: LessonProps) {
           </span>
         </header>
 
-        <strong className="text-gray-200 mt-5 block">
+        <strong className="text-gray-900 mt-5 block">
           {props.title}
         </strong>
       </div>

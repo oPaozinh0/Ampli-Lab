@@ -7,6 +7,10 @@ module.exports = {
         sans: "Roboto, sans-serif",
       },
       colors: {
+        white: {
+          100: "#FFFFFF",
+          200: "#F2F2F2",
+        },
         green: {
           300: "#00B37E",
           500: "#00875F",
@@ -30,6 +34,11 @@ module.exports = {
           700: "#121214",
           900: "#09090A",
         },
+        purple: {
+          700: "#766BBF",
+          800: "#A61F69",
+          900: "#6E1C8E",
+        }
       },
     },
   },
