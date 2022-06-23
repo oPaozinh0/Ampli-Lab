@@ -27,7 +27,7 @@ export function Sidebar() {
   const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY)
 
   return (
-    <aside className="w-[348px] bg-purple-200 p-6 border-l border-purple-600">
+    <aside className="w-[348px] bg-purple-100 p-6 border-l border-purple-700">
       <span className="font-bold text-2xl text-center pb-6 mb-6 border-b border-purple-300 block">
         Prontuário eletrônico
       </span>
