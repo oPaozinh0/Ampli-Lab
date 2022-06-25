@@ -3,47 +3,21 @@ import { Books, CaretRight, Checks, HandWaving } from "phosphor-react";
 import { gql, useQuery } from "@apollo/client";
 
 import '@vime/core/themes/default.css';
+import { useGetLessonBySlugQuery } from "../graphql/generated";
 
-const GET_LESSON_BY_SLUG = gql`
-  query GetLessonBySlug($slug: String) {
-    lesson(where: {slug: $slug}) {
-      title
-      videoId
-      description
-      teacher {
-        name
-        bio
-        avatarURL
-      }
-    }
-  }
-`
-
-interface GetLessonBySlugResponse {
-  lesson: {
-    title: string;
-    videoId: string;
-    description: string;
-    teacher: {
-      name: string;
-      bio: string;
-      avatarURL: string;
-    }
-  }
-}
 
 interface VideoProps {
   lessonSlug: string;
 }
 
 export function Video(props: VideoProps) {
-  const { data } = useQuery<GetLessonBySlugResponse>(GET_LESSON_BY_SLUG, {
+  const { data } = useGetLessonBySlugQuery({
     variables: {
       slug: props.lessonSlug,
     }
   })
 
-  if (!data) {
+  if (!data || !data.lesson) {
     return (
       <div className="flex-1">
         Carregando...
@@ -55,15 +29,18 @@ export function Video(props: VideoProps) {
     <div className="flex-1">
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-         {/* <Player>
+         <Player
+         language="ptBR"
+         mediaTitle={data.lesson.title}
+         >
             <Youtube videoId={data.lesson.videoId}/>
             <DefaultUi />
-          </Player> */}
+          </Player> 
 
-          <iframe 
+          {/* <iframe 
             className="h-full w-full"
             src={`https://www.youtube.com/embed/${data.lesson.videoId}`}
-          ></iframe>
+          ></iframe>*/}
         </div>
       </div>
       <div className="p-8 max-w-[1100px] mx-auto">
@@ -75,17 +52,19 @@ export function Video(props: VideoProps) {
             <p className="nt-4 text-gray-600 leading-relaxed">
             {data.lesson.description}
             </p>
-            <div className="flex items-center gap-4 mt-4">
-              <img 
-              className="h-16 w-16 rounded-full border-2  border-purple-900"
-              src={data.lesson.teacher.avatarURL}
-              alt="" 
-              />
-              <div className="leading-relaxed">
-                <strong className="font-bold text-2xl block">{data.lesson.teacher.name}</strong>
-                <span className="text-grey-900 text-sm block">{data.lesson.teacher.bio}</span>
+            {data.lesson.teacher && (
+              <div className="flex items-center gap-4 mt-4">
+                <img 
+                className="h-16 w-16 rounded-full border-2  border-purple-900"
+                src={data.lesson.teacher.avatarURL}
+                alt="" 
+                />
+                <div className="leading-relaxed">
+                  <strong className="font-bold text-2xl block">{data.lesson.teacher.name}</strong>
+                  <span className="text-grey-900 text-sm block">{data.lesson.teacher.bio}</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="flex flex-col gap-4">
             <a href="" className="text-white-100 p-4 text-sm bg-purple-900 flex items-center rounded font-bold uppercase gap-2 justify-center hover:bg-purple-500 transition-colors">
